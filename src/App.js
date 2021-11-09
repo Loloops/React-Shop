@@ -4,12 +4,19 @@ import { Header } from './components';
 import { Home, Cart } from './pages';
 import axios from 'axios';
 import { setPizzas } from './redux/actions/pizzas';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-function App({ items, setPizzas }) {
+function App() {
+  const dispatch = useDispatch();
+  const { items } = useSelector(({ pizzas }) => {
+    return {
+      items: pizzas.items,
+    };
+  });
+
   useEffect(() => {
     axios.get('http://localhost:3000/db.json').then(({ data }) => {
-      setPizzas(data.pizzas);
+      dispatch(setPizzas(data.pizzas));
     });
   }, []);
 
@@ -26,16 +33,4 @@ function App({ items, setPizzas }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  //Вытащить из всего state опр. данные и закинуть их в props
-  return {
-    items: state.pizzas.items,
-  };
-};
-
-const mapDispatchToProps = {
-  //Пропихнуть actionCreator в  props и вызывать их без dispatch
-  setPizzas,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
