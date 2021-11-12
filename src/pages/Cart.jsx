@@ -4,6 +4,7 @@ import { CartItem } from '../components';
 import { clearCart, removeCartItem, plusItem, minusItem } from '../redux/actions/cart';
 import emptyCartImg from '../assets/img/empty-cart.png';
 import { Link } from 'react-router-dom';
+import Button from '../components/Button';
 
 function Cart() {
   const dispatch = useDispatch();
@@ -30,6 +31,9 @@ function Cart() {
   };
   const onMinusItem = (id) => {
     dispatch(minusItem(id));
+  };
+  const onClickOrder = () => {
+    console.log('Заказ', items);
   };
 
   return (
@@ -112,6 +116,7 @@ function Cart() {
             <div className="content__items">
               {addedPizzas.map((obj) => (
                 <CartItem
+                  key={obj.id}
                   id={obj.id}
                   name={obj.name}
                   type={obj.type}
@@ -152,16 +157,16 @@ function Cart() {
 
                   <span>Вернуться назад</span>
                 </Link>
-                <div className="button pay-btn">
+                <Button onClick={onClickOrder} className="button pay-btn">
                   <span>Оплатить сейчас</span>
-                </div>
+                </Button>
               </div>
             </div>
           </div>
         ) : (
           <div className="cart cart--empty">
             <h2>
-              Корзина пустая <icon>😕</icon>
+              Корзина пустая <i>😕</i>
             </h2>
             <p>
               Вероятней всего, вы не заказывали ещё пиццу.
