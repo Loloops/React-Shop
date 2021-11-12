@@ -7,7 +7,7 @@ function PizzaBlock({ id, name, imageUrl, price, types, sizes, onClickAddPizza, 
   const availableTypes = ['тонкое', 'традиционное'];
   const availableSize = [26, 30, 40];
   const [activeType, setActiveType] = useState(types[0]);
-  const [activeSize, setActiveSize] = useState(sizes[0]);
+  const [activeSize, setActiveSize] = useState(0);
 
   const onSelectType = (index) => {
     setActiveType(index);
@@ -53,7 +53,7 @@ function PizzaBlock({ id, name, imageUrl, price, types, sizes, onClickAddPizza, 
               key={`${index}_${size}`}
               onClick={() => onSelectSize(index)}
               className={classNames({
-                active: activeSize === index || activeSize === size,
+                active: activeSize === index,
                 disabled: !sizes.includes(size),
               })}>
               {size} см.
